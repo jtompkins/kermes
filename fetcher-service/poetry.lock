@@ -53,6 +53,36 @@ d = ["aiohttp (>=3.3.2)", "aiohttp-cors"]
 
 [[package]]
 category = "main"
+description = "The AWS SDK for Python"
+name = "boto3"
+optional = false
+python-versions = "*"
+version = "1.14.56"
+
+[package.dependencies]
+botocore = ">=1.17.56,<1.18.0"
+jmespath = ">=0.7.1,<1.0.0"
+s3transfer = ">=0.3.0,<0.4.0"
+
+[[package]]
+category = "main"
+description = "Low-level, data-driven core of boto 3."
+name = "botocore"
+optional = false
+python-versions = "*"
+version = "1.17.56"
+
+[package.dependencies]
+docutils = ">=0.10,<0.16"
+jmespath = ">=0.7.1,<1.0.0"
+python-dateutil = ">=2.1,<3.0.0"
+
+[package.dependencies.urllib3]
+python = "<3.4.0 || >=3.5.0"
+version = ">=1.20,<1.26"
+
+[[package]]
+category = "main"
 description = "Python package for providing Mozilla's CA Bundle."
 name = "certifi"
 optional = false
@@ -94,6 +124,42 @@ version = "1.1.0"
 
 [[package]]
 category = "dev"
+description = "Simple library to encode/decode DNS wire-format packets"
+name = "dnslib"
+optional = false
+python-versions = "*"
+version = "0.9.14"
+
+[[package]]
+category = "dev"
+description = "DNS toolkit"
+name = "dnspython"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "1.16.0"
+
+[package.extras]
+DNSSEC = ["pycryptodome", "ecdsa (>=0.13)"]
+IDNA = ["idna (>=2.1)"]
+
+[[package]]
+category = "dev"
+description = "Pythonic argument parser, that will make you smile"
+name = "docopt"
+optional = false
+python-versions = "*"
+version = "0.6.2"
+
+[[package]]
+category = "main"
+description = "Docutils -- Python Documentation Utilities"
+name = "docutils"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "0.15.2"
+
+[[package]]
+category = "dev"
 description = "the modular source code checker: pep8 pyflakes and co"
 name = "flake8"
 optional = false
@@ -123,6 +189,62 @@ name = "idna"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "2.10"
+
+[[package]]
+category = "main"
+description = "JSON Matching Expressions"
+name = "jmespath"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "0.10.0"
+
+[[package]]
+category = "dev"
+description = "An easy-to-use test/mocking framework for developing Cloud applications"
+name = "localstack"
+optional = false
+python-versions = "*"
+version = "0.11.3.3"
+
+[package.dependencies]
+boto3 = ">=1.9.71"
+dnspython = "1.16.0"
+docopt = ">=0.6.2"
+localstack-client = ">=0.14"
+localstack-ext = ">=0.11.0"
+requests = ">=2.20.0"
+six = ">=1.12.0"
+
+[package.extras]
+full = ["airspeed (>=0.5.14)", "amazon_kclpy-ext (1.5.1)", "aws-sam-translator (>=1.15.1)", "awscli (>=1.14.18)", "boto (>=2.49.0)", "botocore (>=1.12.13)", "cachetools (>=3.1.1,<4.0.0)", "coverage (4.5.4)", "crontab (>=0.22.6)", "elasticsearch (>=7.0.0,<8.0.0)", "flask (>=1.0.2)", "flask-cors (>=3.0.3,<3.1.0)", "flask_swagger (0.2.12)", "forbiddenfruit (0.1.3)", "jsonpatch (>=1.24,<2.0)", "jsonpath-rw (>=1.4.0,<2.0.0)", "localstack-ext (>=0.11.0)", "moto-ext (>=1.3.15.12)", "nose (>=1.3.7)", "nose-timer (>=0.7.5)", "psutil (>=5.4.8,<6.0.0)", "pympler (>=0.6)", "pyopenssl (17.5.0)", "python-coveralls (>=2.9.1)", "pyyaml (>=3.13,<=5.1)", "Quart (>=0.12.0)", "requests-aws4auth (0.9)", "sasl (>=0.2.1)", "xmltodict (>=0.11.0)"]
+
+[[package]]
+category = "dev"
+description = "A lightweight Python client for LocalStack."
+name = "localstack-client"
+optional = false
+python-versions = "*"
+version = "1.2"
+
+[package.dependencies]
+boto3 = "*"
+
+[[package]]
+category = "dev"
+description = "Extensions for LocalStack"
+name = "localstack-ext"
+optional = false
+python-versions = "*"
+version = "0.11.39.1"
+
+[package.dependencies]
+dnslib = ">=0.9.10"
+dnspython = ">=1.16.0"
+pyaes = ">=1.6.0"
+requests = ">=2.20.0"
+
+[package.extras]
+full = ["docker (>=3.7.2)", "docker-registry-client (>=0.5.2)", "dulwich (>=0.19.16)", "graphql-core (>=3.0.3)", "hbmqtt (>=0.9.5)", "janus (>=0.5.0)", "kubernetes (>=10.0.1)", "pg8000 (>=1.10)", "postgres (>=2.2.2)", "postgresql-proxy (>=0.0.1)", "presto-python-client (>=0.7.0)", "pyftpdlib (>=1.5.6)", "pyhive (>=0.6.1)", "pyion2json (>=0.0.2)", "PyJWT (>=1.7.0)", "pysiddhi-ext (>=5.1.0)", "readerwriterlock (>=1.0.7)", "rsa (>=4.0)", "srp-ext (1.0.7.1)", "testing.common.database (>=1.1.0)", "warrant-ext (>=0.2.0.5)", "websockets (>=8.1)", "Whoosh (>=2.7.4)"]
 
 [[package]]
 category = "main"
@@ -203,6 +325,14 @@ version = "1.9.0"
 
 [[package]]
 category = "dev"
+description = "Pure-Python Implementation of the AES block-cipher and common modes of operation"
+name = "pyaes"
+optional = false
+python-versions = "*"
+version = "1.6.1"
+
+[[package]]
+category = "dev"
 description = "Python style guide checker"
 name = "pycodestyle"
 optional = false
@@ -263,6 +393,17 @@ dev = ["pre-commit", "tox", "pytest-asyncio"]
 
 [[package]]
 category = "main"
+description = "Extensions to the standard Python datetime module"
+name = "python-dateutil"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
+version = "2.8.1"
+
+[package.dependencies]
+six = ">=1.5"
+
+[[package]]
+category = "main"
 description = "fast html to text parser (article readability tool) with python 3 support"
 name = "readability-lxml"
 optional = false
@@ -315,7 +456,18 @@ version = "0.17.0"
 dev = ["pytest"]
 
 [[package]]
-category = "dev"
+category = "main"
+description = "An Amazon S3 Transfer Manager"
+name = "s3transfer"
+optional = false
+python-versions = "*"
+version = "0.3.3"
+
+[package.dependencies]
+botocore = ">=1.12.36,<2.0a.0"
+
+[[package]]
+category = "main"
 description = "Python 2 and 3 compatibility utilities"
 name = "six"
 optional = false
@@ -368,7 +520,7 @@ python-versions = "*"
 version = "0.2.5"
 
 [metadata]
-content-hash = "59df1f26780a1c9b2590261e84e8953fb2589116a0fdb2416f2c1841b4989753"
+content-hash = "01f4f26ec96f4b68925ad2074680f1a787ccf287a920b2bbca837cbbdb42c764"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -388,6 +540,14 @@ attrs = [
 black = [
     {file = "black-20.8b1-py3-none-any.whl", hash = "sha256:70b62ef1527c950db59062cda342ea224d772abdf6adc58b86a45421bab20a6b"},
     {file = "black-20.8b1.tar.gz", hash = "sha256:1c02557aa099101b9d21496f8a914e9ed2222ef70336404eeeac8edba836fbea"},
+]
+boto3 = [
+    {file = "boto3-1.14.56-py2.py3-none-any.whl", hash = "sha256:2ab73b0c400ab8c7df84bee7564ef8a0813021da28dd7a05fcbffb77a8ae9de9"},
+    {file = "boto3-1.14.56.tar.gz", hash = "sha256:bb2222fa02fcd09b39e581e532d4f013ea850742d8cd46e9c10a21028b6d2ef5"},
+]
+botocore = [
+    {file = "botocore-1.17.56-py2.py3-none-any.whl", hash = "sha256:73fd22d70611fdcfbb44d1e5f77f7edf8a45a58e6286d50963cc19f9cf9e3e67"},
+    {file = "botocore-1.17.56.tar.gz", hash = "sha256:5a72e1758f3c89c663d74eb733d313f69d059ab4fd571ad41829d666e3367392"},
 ]
 certifi = [
     {file = "certifi-2020.6.20-py2.py3-none-any.whl", hash = "sha256:8fc0819f1f30ba15bdb34cceffb9ef04d99f420f68eb75d901e9560b8749fc41"},
@@ -409,6 +569,21 @@ cssselect = [
     {file = "cssselect-1.1.0-py2.py3-none-any.whl", hash = "sha256:f612ee47b749c877ebae5bb77035d8f4202c6ad0f0fc1271b3c18ad6c4468ecf"},
     {file = "cssselect-1.1.0.tar.gz", hash = "sha256:f95f8dedd925fd8f54edb3d2dfb44c190d9d18512377d3c1e2388d16126879bc"},
 ]
+dnslib = [
+    {file = "dnslib-0.9.14.tar.gz", hash = "sha256:fbd20a7cd704836923be8e130f0da6c3d840f14ac04590fae420a41d1f1be6fb"},
+]
+dnspython = [
+    {file = "dnspython-1.16.0-py2.py3-none-any.whl", hash = "sha256:f69c21288a962f4da86e56c4905b49d11aba7938d3d740e80d9e366ee4f1632d"},
+    {file = "dnspython-1.16.0.zip", hash = "sha256:36c5e8e38d4369a08b6780b7f27d790a292b2b08eea01607865bf0936c558e01"},
+]
+docopt = [
+    {file = "docopt-0.6.2.tar.gz", hash = "sha256:49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"},
+]
+docutils = [
+    {file = "docutils-0.15.2-py2-none-any.whl", hash = "sha256:9e4d7ecfc600058e07ba661411a2b7de2fd0fafa17d1a7f7361cd47b1175c827"},
+    {file = "docutils-0.15.2-py3-none-any.whl", hash = "sha256:6c4f696463b79f1fb8ba0c594b63840ebd41f059e92b31957c46b74a4599b6d0"},
+    {file = "docutils-0.15.2.tar.gz", hash = "sha256:a2aeea129088da402665e92e0b25b04b073c04b2dce4ab65caaa38b7ce2e1a99"},
+]
 flake8 = [
     {file = "flake8-3.8.3-py2.py3-none-any.whl", hash = "sha256:15e351d19611c887e482fb960eae4d44845013cc142d42896e9862f775d8cf5c"},
     {file = "flake8-3.8.3.tar.gz", hash = "sha256:f04b9fcbac03b0a3e58c0ab3a0ecc462e023a9faf046d57794184028123aa208"},
@@ -420,6 +595,19 @@ flake8-pytest = [
 idna = [
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
     {file = "idna-2.10.tar.gz", hash = "sha256:b307872f855b18632ce0c21c5e45be78c0ea7ae4c15c828c20788b26921eb3f6"},
+]
+jmespath = [
+    {file = "jmespath-0.10.0-py2.py3-none-any.whl", hash = "sha256:cdf6525904cc597730141d61b36f2e4b8ecc257c420fa2f4549bac2c2d0cb72f"},
+    {file = "jmespath-0.10.0.tar.gz", hash = "sha256:b85d0567b8666149a93172712e68920734333c0ce7e89b78b3e987f71e5ed4f9"},
+]
+localstack = [
+    {file = "localstack-0.11.3.3.tar.gz", hash = "sha256:28d4a14480f867b7459c30584a776e91da593d50fe366a262dd6c1716ed74e7b"},
+]
+localstack-client = [
+    {file = "localstack-client-1.2.tar.gz", hash = "sha256:bb023bd0c5a17ce4d580bf83d81baa468dd0d066888a1c65222185f035b391d1"},
+]
+localstack-ext = [
+    {file = "localstack-ext-0.11.39.1.tar.gz", hash = "sha256:0fcb10b2f430f57a80826dc435fbba287ee28de1190859be13b450406a91a296"},
 ]
 lxml = [
     {file = "lxml-4.5.2-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:74f48ec98430e06c1fa8949b49ebdd8d27ceb9df8d3d1c92e1fdc2773f003f20"},
@@ -482,6 +670,9 @@ py = [
     {file = "py-1.9.0-py2.py3-none-any.whl", hash = "sha256:366389d1db726cd2fcfc79732e75410e5fe4d31db13692115529d34069a043c2"},
     {file = "py-1.9.0.tar.gz", hash = "sha256:9ca6883ce56b4e8da7e79ac18787889fa5206c79dcc67fb065376cd2fe03f342"},
 ]
+pyaes = [
+    {file = "pyaes-1.6.1.tar.gz", hash = "sha256:02c1b1405c38d3c370b085fb952dd8bea3fadcee6411ad99f312cc129c536d8f"},
+]
 pycodestyle = [
     {file = "pycodestyle-2.6.0-py2.py3-none-any.whl", hash = "sha256:2295e7b2f6b5bd100585ebcb1f616591b652db8a741695b3d8f5d28bdc934367"},
     {file = "pycodestyle-2.6.0.tar.gz", hash = "sha256:c58a7d2815e0e8d7972bf1803331fb0152f867bd89adf8a01dfd55085434192e"},
@@ -501,6 +692,10 @@ pytest = [
 pytest-mock = [
     {file = "pytest-mock-3.3.1.tar.gz", hash = "sha256:a4d6d37329e4a893e77d9ffa89e838dd2b45d5dc099984cf03c703ac8411bb82"},
     {file = "pytest_mock-3.3.1-py3-none-any.whl", hash = "sha256:024e405ad382646318c4281948aadf6fe1135632bea9cc67366ea0c4098ef5f2"},
+]
+python-dateutil = [
+    {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},
+    {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
 ]
 readability-lxml = [
     {file = "readability-lxml-0.8.1.tar.gz", hash = "sha256:e51fea56b5909aaf886d307d48e79e096293255afa567b7d08bca94d25b1a4e1"},
@@ -535,6 +730,10 @@ requests = [
 ]
 rope = [
     {file = "rope-0.17.0.tar.gz", hash = "sha256:658ad6705f43dcf3d6df379da9486529cf30e02d9ea14c5682aa80eb33b649e1"},
+]
+s3transfer = [
+    {file = "s3transfer-0.3.3-py2.py3-none-any.whl", hash = "sha256:2482b4259524933a022d59da830f51bd746db62f047d6eb213f2f8855dcb8a13"},
+    {file = "s3transfer-0.3.3.tar.gz", hash = "sha256:921a37e2aefc64145e7b73d50c71bb4f26f46e4c9f414dc648c6245ff92cf7db"},
 ]
 six = [
     {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},
