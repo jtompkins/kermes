@@ -31,18 +31,6 @@ tests_no_zope = ["coverage (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0
 
 [[package]]
 category = "dev"
-description = "A tool that automatically formats Python code to conform to the PEP 8 style guide"
-name = "autopep8"
-optional = false
-python-versions = "*"
-version = "1.5.4"
-
-[package.dependencies]
-pycodestyle = ">=2.6.0"
-toml = "*"
-
-[[package]]
-category = "dev"
 description = "The uncompromising code formatter."
 name = "black"
 optional = false
@@ -260,6 +248,20 @@ checkqa-mypy = ["mypy (v0.761)"]
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
 [[package]]
+category = "dev"
+description = "Thin-wrapper around the mock package for easier use with pytest"
+name = "pytest-mock"
+optional = false
+python-versions = ">=3.5"
+version = "3.3.1"
+
+[package.dependencies]
+pytest = ">=5.0"
+
+[package.extras]
+dev = ["pre-commit", "tox", "pytest-asyncio"]
+
+[[package]]
 category = "main"
 description = "fast html to text parser (article readability tool) with python 3 support"
 name = "readability-lxml"
@@ -366,7 +368,7 @@ python-versions = "*"
 version = "0.2.5"
 
 [metadata]
-content-hash = "5afeb7cba5ea00d8dcdf48fa72c8dbd2c632f5276f568eabe9b8f7ae96b73533"
+content-hash = "59df1f26780a1c9b2590261e84e8953fb2589116a0fdb2416f2c1841b4989753"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -382,9 +384,6 @@ atomicwrites = [
 attrs = [
     {file = "attrs-20.2.0-py2.py3-none-any.whl", hash = "sha256:fce7fc47dfc976152e82d53ff92fa0407700c21acd20886a13777a0d20e655dc"},
     {file = "attrs-20.2.0.tar.gz", hash = "sha256:26b54ddbbb9ee1d34d5d3668dd37d6cf74990ab23c828c2888dccdceee395594"},
-]
-autopep8 = [
-    {file = "autopep8-1.5.4.tar.gz", hash = "sha256:d21d3901cb0da6ebd1e83fc9b0dfbde8b46afc2ede4fe32fbda0c7c6118ca094"},
 ]
 black = [
     {file = "black-20.8b1-py3-none-any.whl", hash = "sha256:70b62ef1527c950db59062cda342ea224d772abdf6adc58b86a45421bab20a6b"},
@@ -498,6 +497,10 @@ pyparsing = [
 pytest = [
     {file = "pytest-5.4.3-py3-none-any.whl", hash = "sha256:5c0db86b698e8f170ba4582a492248919255fcd4c79b1ee64ace34301fb589a1"},
     {file = "pytest-5.4.3.tar.gz", hash = "sha256:7979331bfcba207414f5e1263b5a0f8f521d0f457318836a7355531ed1a4c7d8"},
+]
+pytest-mock = [
+    {file = "pytest-mock-3.3.1.tar.gz", hash = "sha256:a4d6d37329e4a893e77d9ffa89e838dd2b45d5dc099984cf03c703ac8411bb82"},
+    {file = "pytest_mock-3.3.1-py3-none-any.whl", hash = "sha256:024e405ad382646318c4281948aadf6fe1135632bea9cc67366ea0c4098ef5f2"},
 ]
 readability-lxml = [
     {file = "readability-lxml-0.8.1.tar.gz", hash = "sha256:e51fea56b5909aaf886d307d48e79e096293255afa567b7d08bca94d25b1a4e1"},
