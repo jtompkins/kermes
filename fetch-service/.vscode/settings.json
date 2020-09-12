@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/Users/josh/Library/Caches/pypoetry/virtualenvs/fetcher-service-LVC0vxnU-py3.8/bin/python",
+    "python.pythonPath": "/Users/josh/Library/Caches/pypoetry/virtualenvs/fetch-service-Ut7BOtTW-py3.8/bin/python",
     "python.linting.flake8Enabled": true,
     "python.linting.enabled": true,
     "python.formatting.provider": "black",

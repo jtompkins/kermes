@@ -1,4 +1,4 @@
-from fetcher_service import __version__
+from fetch_service import __version__
 
 
 def test_version():

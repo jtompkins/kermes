@@ -1,7 +1,9 @@
-from unittest.mock import Mock, call
-import pytest
-from decorators.retry import retry
 import time
+from unittest.mock import Mock, call
+
+import pytest
+
+from decorators.retry import retry
 
 
 @pytest.fixture
