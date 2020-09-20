@@ -7,15 +7,13 @@ from models import Article
 
 
 class ArticleAdapter:
-    def __init__(self) -> None:
+    def __init__(self, table_name: str) -> None:
         self.dynamodb = boto3.resource("dynamodb", endpoint_url="http://localhost:4566")
-        self.table = self.dynamodb.Table("articles")
+        self.table = self.dynamodb.Table(table_name)
 
     def get(self, user_id: str, article_id: str) -> Optional[Article]:
         try:
-            item = self.table.get_item(
-                Key={"user_id": user_id, "article_id": article_id}
-            )
+            item = self.table.get_item(Key={"user_id": user_id, "article_id": article_id})
 
             return Article.from_dynamo(item["Item"])
         except ClientError:
