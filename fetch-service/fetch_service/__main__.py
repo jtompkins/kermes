@@ -1,31 +1,27 @@
-# from repositories import UserRepository, ArticleRepository
-# from repositories.aws_adapters import UserAdapter, ArticleAdapter
-# from fetch_service import FetchService, SignalHandler
+from repositories import UserRepository, ArticleRepository, FileRepository
+from repositories.aws_adapters import UserAdapter, ArticleAdapter, FileAdapter
+from fetch_service import FetchService, SignalHandler
 
-from repositories import FileRepository
-from repositories.aws_adapters import FileAdapter
-
-from pathlib import Path
+# from pathlib import Path
 
 if __name__ == "__main__":
-    # user_repo = UserRepository(UserAdapter())
-    # article_repo = ArticleRepository(ArticleAdapter())
-
-    # service = FetchService(SignalHandler(), user_repo, article_repo)
-
-    # service.consume_from_queue()
-
+    user_repo = UserRepository(UserAdapter("users"))
+    article_repo = ArticleRepository(ArticleAdapter("articles"))
     file_repo = FileRepository(FileAdapter("kermes-articles"))
 
-    in_path = Path.home() / "rbg.jpg"
-    out_path = Path.home() / "rbg_copy.jpg"
+    service = FetchService("kermes-fetch-article.fifo", SignalHandler(), user_repo, article_repo, file_repo)
 
-    with in_path.open(mode="rb") as readfile:
-        file_repo.put("rbg.jpg", readfile)
+    service.consume_from_queue()
 
-    with out_path.open(mode="wb") as writefile:
-        s3_stream = file_repo.get("rbg.jpg")
+    # in_path = Path.home() / "rbg.jpg"
+    # out_path = Path.home() / "rbg_copy.jpg"
 
-        writefile.write(s3_stream.read())
+    # with in_path.open(mode="rb") as readfile:
+    #     file_repo.put("rbg.jpg", readfile)
 
-    print("done")
+    # with out_path.open(mode="wb") as writefile:
+    #     s3_stream = file_repo.get("rbg.jpg")
+
+    #     writefile.write(s3_stream.read())
+
+    # print("done")
