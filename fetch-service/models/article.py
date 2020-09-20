@@ -52,6 +52,8 @@ class Article:
     def __init__(self, user_id: str) -> None:
         self.user_id = user_id
         self.article_id = str(uuid4())
+        self.title = None
+        self.url = None
         self.content_key = None
         self.related_content = []
         self.created_date = datetime.now(tz=timezone.utc)
