@@ -51,14 +51,10 @@ def test_article_to_dynamo_makes_well_formed_dict(mock_uuid, mock_now):
 
 def test_article_to_dynamo_properly_handles_related_content(mock_uuid, mock_now):
     subject = models.Article(EMPTY_UUID)
-    subject.related_content.append(
-        models.article.RelatedContent("test_mime", "test_key")
-    )
+    subject.related_content.append(models.article.RelatedContent("test_mime", "test_key"))
     dynamo_dict = subject.to_dynamo()
 
-    assert dynamo_dict["related_content"] == [
-        {"mime_type": "test_mime", "content_key": "test_key"}
-    ]
+    assert dynamo_dict["related_content"] == [{"mime_type": "test_mime", "content_key": "test_key"}]
 
 
 def test_article_to_dynamo_properly_handles_missing_fields(mock_uuid, mock_now):
