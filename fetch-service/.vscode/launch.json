@@ -5,10 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Module",
+            "name": "Run Fetch Service",
             "type": "python",
             "request": "launch",
-            "module": "fetch_service"
+            "module": "fetch_service",
+            "console": "internalConsole",
+            "redirectOutput": true
         }
     ]
 }
