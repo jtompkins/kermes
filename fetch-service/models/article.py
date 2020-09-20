@@ -24,6 +24,8 @@ class RelatedContent:
 class Article:
     user_id: str
     article_id: str
+    url: Optional[str]
+    title: Optional[str]
     content_key: Optional[str]
     related_content: List[RelatedContent]
     created_date: datetime
@@ -33,16 +35,17 @@ class Article:
         article = Article(item["user_id"])
         article.article_id = item["article_id"]
 
+        if "url" in item:
+            article.url = item["url"]
+
+        if "title" in item:
+            article.title = item["title"]
+
         if "content_key" in item:
             article.content_key = item["content_key"]
 
-        article.related_content = [
-            RelatedContent.from_dynamo(r) for r in item["related_content"]
-        ]
-
-        article.created_date = datetime.fromtimestamp(
-            float(item["created_date"]), timezone.utc
-        )
+        article.related_content = [RelatedContent.from_dynamo(r) for r in item["related_content"]]
+        article.created_date = datetime.fromtimestamp(float(item["created_date"]), timezone.utc)
 
         return article
 
@@ -60,6 +63,12 @@ class Article:
             "related_content": [r.to_dynamo() for r in self.related_content],
             "created_date": str(self.created_date.timestamp()),
         }
+
+        if self.url is not None:
+            dynamo_dict["url"] = self.url
+
+        if self.title is not None:
+            dynamo_dict["title"] = self.title
 
         if self.content_key is not None:
             dynamo_dict["content_key"] = self.content_key

@@ -24,9 +24,7 @@ class User:
         if "send_day" in item:
             user.send_day = int(item["send_day"])
 
-        user.created_date = datetime.fromtimestamp(
-            float(item["created_date"]), timezone.utc
-        )
+        user.created_date = datetime.fromtimestamp(float(item["created_date"]), timezone.utc)
 
         return user
 
