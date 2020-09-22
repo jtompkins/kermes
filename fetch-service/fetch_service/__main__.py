@@ -1,17 +1,20 @@
 from repositories import UserRepository, ArticleRepository, FileRepository
 from repositories.aws_adapters import UserAdapter, ArticleAdapter, FileAdapter
-from fetch_service import FetchService, SignalHandler
+from queues import SQSProducer, SQSConsumer, SignalHandler
+from fetch_service import FetchService
 
 # from pathlib import Path
 
 if __name__ == "__main__":
-    user_repo = UserRepository(UserAdapter("users"))
-    article_repo = ArticleRepository(ArticleAdapter("articles"))
-    file_repo = FileRepository(FileAdapter("kermes-articles"))
+    service = FetchService(
+        UserRepository(UserAdapter("users")),
+        ArticleRepository(ArticleAdapter("articles")),
+        FileRepository(FileAdapter("kermes-articles")),
+        SQSProducer("kermes-fetch-completed.fifo", "1"),
+    )
 
-    service = FetchService("kermes-fetch-article.fifo", SignalHandler(), user_repo, article_repo, file_repo)
-
-    service.consume_from_queue()
+    sqs_consumer = SQSConsumer("kermes-fetch-article.fifo", 1, 1, SignalHandler(), service)
+    sqs_consumer.consume_from_queue()
 
     # in_path = Path.home() / "rbg.jpg"
     # out_path = Path.home() / "rbg_copy.jpg"
