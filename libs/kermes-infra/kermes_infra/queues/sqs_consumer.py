@@ -1,3 +1,5 @@
+import logging
+
 import boto3
 
 from kermes_infra.queues.signal_handler import SignalHandler
@@ -13,6 +15,7 @@ class SQSConsumer:
         wait_time_seconds: int,
         signal_handler: SignalHandler,
         consumer: SupportsConsumption,
+        logger: logging.Logger,
     ) -> None:
         self.sqs = boto3.client("sqs", endpoint_url=endpoint_url)
         self.queue_url: str = self.sqs.get_queue_url(QueueName=queue_name)["QueueUrl"]
@@ -20,10 +23,11 @@ class SQSConsumer:
         self.wait_time_seconds = wait_time_seconds
         self.signal_handler = signal_handler
         self.consumer = consumer
+        self.logger = logger
 
-    def consume_from_queue(self):
+    def consume_from_queue(self) -> None:
         while not self.signal_handler.received_signal:
-            print("waiting for up to 20 seconds to receive messages")
+            self.logger.info(f"waiting for up to {self.wait_time_seconds} to receive messages from SQS")
 
             response = self.sqs.receive_message(
                 QueueUrl=self.queue_url,
@@ -32,21 +36,23 @@ class SQSConsumer:
             )
 
             if "Messages" not in response:
-                print("received no messages from queue")
+                self.logger.info("received no messages from queue")
                 continue
 
             messages = response["Messages"]
 
-            print(f"received {len(messages)} messages from sqs queue")
+            self.logger.debug(f"received {len(messages)} from SQS queue")
 
             for message_data in messages:
                 try:
-                    print(f"received message from queue: {repr(message_data)}")
+                    self.logger.debug(f"received message from queue: {repr(message_data)}")
 
                     if self.consumer.process_message(message_data["Body"]):
-                        print("deleting message")
+                        self.logger.info(f"deleting message {message_data['MessageId']}")
 
                         self.sqs.delete_message(QueueUrl=self.queue_url, ReceiptHandle=message_data["ReceiptHandle"])
                 except Exception as e:
-                    print(f"exception while processing message: {repr(e)}")
+                    self.logger.error(f"exception while processing message", exc_info=True)
+
+                    # TODO: don't just continue here, move the message to the dead letter queue so other consumers won't hit it
                     continue
