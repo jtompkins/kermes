@@ -7,13 +7,14 @@ from kermes_infra.queues.supports_consumption import SupportsConsumption
 class SQSConsumer:
     def __init__(
         self,
+        endpoint_url: str,
         queue_name: str,
         max_retrieved: int,
         wait_time_seconds: int,
         signal_handler: SignalHandler,
         consumer: SupportsConsumption,
     ) -> None:
-        self.sqs = boto3.client("sqs", endpoint_url="http://localhost:4566")
+        self.sqs = boto3.client("sqs", endpoint_url=endpoint_url)
         self.queue_url: str = self.sqs.get_queue_url(QueueName=queue_name)["QueueUrl"]
         self.max_retrieved = max_retrieved
         self.wait_time_seconds = wait_time_seconds

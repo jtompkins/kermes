@@ -5,8 +5,8 @@ from botocore.exceptions import ClientError
 
 
 class SQSProducer:
-    def __init__(self, queue_name: str, message_group_id: str) -> None:
-        self.sqs = boto3.client("sqs", endpoint_url="http://localhost:4566")
+    def __init__(self, endpoint_url: str, queue_name: str, message_group_id: str) -> None:
+        self.sqs = boto3.client("sqs", endpoint_url=endpoint_url)
         self.queue_url: str = self.sqs.get_queue_url(QueueName=queue_name)["QueueUrl"]
         self.message_group_id = message_group_id
 

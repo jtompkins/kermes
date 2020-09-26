@@ -5,12 +5,14 @@ from kermes_infra.repositories.aws_adapters import ArticleAdapter, FileAdapter, 
 from .fetcher import Fetcher
 
 if __name__ == "__main__":
+    ENDPOINT_URL = "http://localhost:4566"
+
     service = Fetcher(
-        UserRepository(UserAdapter("users")),
-        ArticleRepository(ArticleAdapter("articles")),
-        FileRepository(FileAdapter("kermes-articles")),
-        SQSProducer("kermes-fetch-completed.fifo", "1"),
+        UserRepository(UserAdapter(ENDPOINT_URL, "users")),
+        ArticleRepository(ArticleAdapter(ENDPOINT_URL, "articles")),
+        FileRepository(FileAdapter(ENDPOINT_URL, "kermes-articles")),
+        SQSProducer(ENDPOINT_URL, "kermes-fetch-completed.fifo", "1"),
     )
 
-    sqs_consumer = SQSConsumer("kermes-fetch-article.fifo", 1, 1, SignalHandler(), service)
+    sqs_consumer = SQSConsumer(ENDPOINT_URL, "kermes-fetch-article.fifo", 1, 1, SignalHandler(), service)
     sqs_consumer.consume_from_queue()
