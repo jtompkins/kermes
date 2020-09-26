@@ -6,9 +6,12 @@ authors = ["Joshua Tompkins <josh@joshtompkins.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+kermes-infra = {path = "../libs/kermes-infra"}
+ebooklib = "^0.17.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
+black = {version = "^20.8b1", allow-prereleases = true}
 
 [build-system]
 requires = ["poetry>=0.12"]

@@ -69,7 +69,7 @@ class Fetcher:
                 self.logger.debug(f"fetching related image at {img_url}")
 
                 img_resp = requests.get(img_url)
-                img_key = f"{article.user_id}/{article.article_id}/{Fetcher.get_filename_from_url(img_resp.url)}"
+                img_key = f"{article.user_id}/articles/{article.article_id}/related/{Fetcher.get_filename_from_url(img_resp.url)}"
             except Exception:
                 self.logger.exception(f"failed to fetch related image at url {img_url}")
                 continue
@@ -88,7 +88,7 @@ class Fetcher:
             image.set("src", img_key)
 
         # write the content to S3
-        content_key = f"{article.user_id}/{article.article_id}/content.html"
+        content_key = f"{article.user_id}/articles/{article.article_id}/content.html"
 
         self.logger.debug(f"writing content to S# with key {content_key}")
         if not self.file_repository.put(

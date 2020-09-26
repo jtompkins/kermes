@@ -3,6 +3,7 @@ import logging
 
 import boto3
 from botocore.exceptions import ClientError
+from boto3.dynamodb.conditions import Key
 
 from kermes_infra.models import Article
 
@@ -20,12 +21,18 @@ class ArticleAdapter:
             return Article.from_dynamo(item["Item"])
         except ClientError:
             self.logger.error(
-                f"error while getting record from Dynamo: user_id {user_id}, article_id {article_id}", exc_info=True
+                f"get: error while getting article record from Dynamo: user_id {user_id}, article_id {article_id}",
+                exc_info=True,
             )
             return None
 
     def get_all(self, user_id: str):
-        pass
+        try:
+            response = self.table.query(KeyConditionExpression=Key("user_id").eq(user_id))
+
+            return [Article.from_dynamo(item) for item in response["Items"]]
+        except ClientError:
+            self.logger.exception(f"get_all: error while getting article records from Dynamo: user_id {user_id}")
 
     def put(self, article: Article) -> bool:
         try:
@@ -33,7 +40,7 @@ class ArticleAdapter:
             return True
         except ClientError:
             self.logger.error(
-                f"error while writing record to Dynamo: user_id {article.user_id}, article_id {article.article_id}",
+                f"put: rror while writing article record to Dynamo: user_id {article.user_id}, article_id {article.article_id}",
                 exc_info=True,
             )
             return False
