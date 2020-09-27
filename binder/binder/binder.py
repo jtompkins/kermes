@@ -37,8 +37,18 @@ class Binder:
         # fetch the user record
         user = self.user_repository.get(bind_ebook_msg.user_id)
 
+        if user is None:
+            self.logger.error(f"couldn't fetch user with id {bind_ebook_msg.user_id}")
+            return False
+
         # fetch the articles for the user
         articles = self.article_repository.get_all(user.user_id)
+
+        if len(articles) < 1:
+            # we want to exit early, but this is not an exceptional case, so we'll return True
+            # so that the consumer deletes the message
+            self.logger.info(f"no articles ready for binding for user {user.user_id}")
+            return True
 
         # create the ebook model
         ebook_model = EBook(user.user_id)
@@ -51,11 +61,15 @@ class Binder:
 
         # for each article:
         for i, article in enumerate(articles):
-            # add the article ID to the ebook model
-            ebook_model.article_ids.append(article.article_id)
-
             # fetch the content from S3
             article_content = self.file_repository.get(article.content_key)
+
+            if article_content is None:
+                self.logger.error(f"couldn't fetch the saved content for article {article.article_id}")
+                continue
+
+            # add the article ID to the ebook model
+            ebook_model.article_ids.append(article.article_id)
 
             # create an ebooklib chapter
             chapter = epub.EpubHtml(title=article.title, file_name=f"chapter_{i}.xhtml", lang="en")
@@ -67,6 +81,12 @@ class Binder:
             for j, related_content in enumerate(article.related_content):
                 # fetch the related content from S3
                 item_content = self.file_repository.get(related_content.content_key)
+
+                if item_content is None:
+                    self.logger.error(
+                        f"couldn't fetch the saved related content for article {article.article_id} and related content {related_content.content_key}"
+                    )
+                    continue
 
                 # create the ebooklib item
                 related_item = epub.EpubItem(
@@ -100,23 +120,31 @@ class Binder:
 
         epub_path = Path.cwd() / f"{ebook_model.ebook_id}.epub"
 
-        # render the ebook and write it to a local file
-        epub.write_epub(str(epub_path), ebook)
+        try:
+            # render the ebook and write it to a local file
+            epub.write_epub(str(epub_path), ebook)
 
-        content_key = f"{ebook_model.user_id}/books/{ebook_model.ebook_id}.epub"
+            content_key = f"{ebook_model.user_id}/books/{ebook_model.ebook_id}.epub"
 
-        # read the local file into a bytestream
-        with epub_path.open(mode="rb") as f:
-            # write the bytestream to S3 and update the content_key on the ebook model
-            self.file_repository.put(content_key, f)
-
-        # remove the temporary ePub file
-        epub_path.unlink()
+            # read the local file into a bytestream
+            with epub_path.open(mode="rb") as f:
+                # write the bytestream to S3 and update the content_key on the ebook model
+                if not self.file_repository.put(content_key, f):
+                    self.logger.exception("unable to push ebook content to S3")
+                    return False
+        except Exception:
+            self.logger.exception("unable to write ebook to local file store")
+            return False
+        finally:
+            # remove the temporary ePub file
+            epub_path.unlink()
 
         ebook_model.content_key = content_key
 
         # write the ebook model to Dynamo
-        self.ebook_repository.put(ebook_model)
+        if not self.ebook_repository.put(ebook_model):
+            self.logger.error(f"unable to write ebook record to Dynamo for user {user.user_id}")
+            return False
 
         if user.prefer_kindle:
             self.converter_queue_producer.send_message(
