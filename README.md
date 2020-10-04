@@ -23,6 +23,48 @@ A monorepo for the Kermes family of microservices
 * [ ] Build mobile apps with share extensions so articles can be added from native devices
 * [ ] Leverage Prometheus metrics to create a Grafana dashboard for overall system health, including queue backpressure 
 
+## Instrumentation
+
+### Traffic
+
+* Messages processed
+* Content fetched (origin, size)
+  * Related content fetched (origin, size, mime-type)
+* API requests
+
+### Latency
+
+* Time in queue
+* R/W time to data stores
+* Message processing time
+* Special cases
+  * Fetch times
+  * Ebook write times
+  * Conversion times
+  * Email send time
+
+### Error Rate
+
+* Infrastructure failures
+  * SQS Read/Write failure
+  * Dynamo R/W failure
+  * S3 R/W failure
+  * SES send failure
+  
+* Business transaction failures
+  * Failed message processing
+  * Dead-letter queue length
+  * Content fetch failures
+    * Error codes
+    * Origin
+
+### Saturation
+
+* number of pending articles
+* number of pending ebooks
+* S3 storage usage
+* Queue lengths
+
 ## Testing Locally
 
 ### Starting Localstack
