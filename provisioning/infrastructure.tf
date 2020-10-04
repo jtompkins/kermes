@@ -21,6 +21,7 @@ provider "aws" {
     dynamodb = "http://localhost:4569"
     s3       = "http://localhost:4572"
     sqs      = "http://localhost:4576"
+    ses      = "http://localhost:4579"
   }
 }
 
@@ -100,6 +101,12 @@ resource "aws_sqs_queue" "convert_ebook_queue" {
 
 resource "aws_sqs_queue" "deliver_ebook_queue" {
   name                        = "kermes-deliver-ebook.fifo"
+  fifo_queue                  = true
+  content_based_deduplication = true
+}
+
+resource "aws_sqs_queue" "cleanup_queue" {
+  name                        = "kermes-cleanup.fifo"
   fifo_queue                  = true
   content_based_deduplication = true
 }
