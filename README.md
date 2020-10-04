@@ -8,6 +8,7 @@ A monorepo for the Kermes family of microservices
   * [ ] `housekeeper`
   * [ ] `conductor` (I think? This will the one that runs like a cron-job to trigger scheduled binding for users)
   * [ ] `api`
+* [ ] Figure out how to properly authenticate this stuff with something like Auth0
 * [ ] Write actual tests for the individual service business logic, which probably means a lot more mocking :(
 * [ ] Containerize the Kermes microservices
 * [ ] Orchestrate the local dev environment, either with k8s or docker-compose, and include localstack
