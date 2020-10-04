@@ -1,5 +1,6 @@
 import logging
 from io import BytesIO
+from datetime import datetime, timezone
 
 from kermes_infra.mail import MailService
 from kermes_infra.repositories import FileRepository, UserRepository, EBookRepository
@@ -69,5 +70,12 @@ class Postmaster:
             return False
 
         self.housekeeper_queue_producer.send_message(CleanUpMessage(user.user_id, ebook.ebook_id).to_json())
+
+        ebook.sent = True
+        ebook.sent_date = datetime.now(tz=timezone.utc)
+
+        if not self.ebook_repository.put(ebook):
+            self.logger.error(f"couldn't update ebook {ebook.ebook_id} with sent status")
+            return False
 
         return True
