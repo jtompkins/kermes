@@ -132,3 +132,6 @@ dmypy.json
 .terraform/
 
 .DS_Store
+
+*.mobi
+*.epub

@@ -1,0 +1,17 @@
+{
+    "user_id": {
+        "S": "test-user"
+    },
+    "email": {
+        "S": "test@test.com"
+    },
+    "delivery_email": {
+        "S": "test@test.com"
+    },
+    "prefer_kindle": {
+        "BOOL": true
+    },
+    "created_date": {
+        "N": "1601824509.558994"
+    }
+}
