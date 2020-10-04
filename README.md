@@ -1,6 +1,27 @@
 # kermes
 A monorepo for the Kermes family of microservices
 
+## Long-term TODOs
+
+* [ ] Finish the remaining microservices
+  * [ ] `bookkeeper`
+  * [ ] `housekeeper`
+  * [ ] `conductor` (I think? This will the one that runs like a cron-job to trigger scheduled binding for users)
+  * [ ] `api`
+* [ ] Write actual tests for the individual service business logic, which probably means a lot more mocking :(
+* [ ] Containerize the Kermes microservices
+* [ ] Orchestrate the local dev environment, either with k8s or docker-compose, and include localstack
+* [ ] Instrument the microservices with Prometheus
+* [ ] Finalize formatting for production ebooks
+  * [ ] Title pages?
+  * [ ] Proper formatting for individual articles
+  * [ ] Cover images
+* [ ] Create a serviceable template for the delivery email
+* [ ] Come up with a better non-email way to deliver ebooks for folks that don't want email traffic
+* [ ] Build a UI in front of the API so people can monitor their queues
+* [ ] Build mobile apps with share extensions so articles can be added from native devices
+* [ ] Leverage Prometheus metrics to create a Grafana dashboard for overall system health, including queue backpressure 
+
 ## Testing Locally
 
 ### Starting Localstack
